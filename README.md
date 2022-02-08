@@ -2,6 +2,9 @@
 ## Overview
 This is my submission for a coding challenge asking to handle in-memory tracking of visit counts for about 20 million unique IP addresses per day. As an additional requirement, the code must be able to return the 100 most common IP addresses as fast as possible. Five questions about the challenge are answered below.
 
+---
+## Challenge questions
+
 1) What would you do differently if you had more time?
 
 - I would want to change the `Visitor` class to not declare `Visitor` objects equal if they aren’t totally equal, as well as to change the logic of the first condition of `update_top_visitors` to account for the change. The current `compareTo` method only compares their `ip` values and doesn’t consider visits, which allows an easy check for whether they are in `top_visitors` , but I don’t like the idea of an `equals()` method that does not check for total equality. Since the prompt suggested only spending so much time on this project, this is what I came up with, but I think we could do better.
