@@ -44,26 +44,24 @@ public class IpTracker {
 
     private void update_top_visitors(String visitor_ip) {
         Visitor visitor = visitors.get(visitor_ip);
-        // Visitor is already one of the top100
+        // Three possibilities:
+        // 1. Visitor is already one of the top_visitors
         if (top_visitors.contains(visitor)) {
-            // Feels hacky, but does update the visits value of the Visitor in the list and reorganizes the queue.
+            // This feels hacky, but does update the visits value of the Visitor and reorganizes the queue. There has
+            // to be a better way that isn't coming to me right now.
             top_visitors.remove(visitor);
             top_visitors.offer(visitor);
         }
-        // Visitor is not already top 100, but there are fewer than 100 total visitors
+        // 2. Visitor is not already in top_visitors, but there are fewer than 100 unique visitors
         else if (top_visitors.size() < TOP_CAPACITY) {
             top_visitors.offer(visitor);
         }
-        // See if visitor is valid to be a top visitor
+        // 3. Visitor was not in top 100 prior to this visit but may now be eligible
         else {
             if (visitor.getVisits() > top_visitors.peek().getVisits()) {
                 top_visitors.poll();
                 top_visitors.offer(visitor);
             }
         }
-    }
-
-    public PriorityQueue<Visitor> getTop_visitors() {
-        return top_visitors;
     }
 }
